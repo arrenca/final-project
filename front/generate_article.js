@@ -1,10 +1,12 @@
 import AWS from 'aws-sdk'
 import axios from 'axios'
 import fs from 'fs'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const s3 = new AWS.S3()
 const url = "https://is215-openai.upou.io/v1/chat/completions"
-const apiKey = "anives-008Q84PdCC"
+const apiKey = process.env.API_KEY
 
 const headers = {
   "Content-Type": "application/json",
