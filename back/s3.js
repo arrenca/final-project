@@ -1,5 +1,7 @@
 import dotenv from 'dotenv'
 import aws from 'aws-sdk'
+import { v4 as uuidv4 } from 'uuid';
+import mime from 'mime-types';
 
 dotenv.config()
 
@@ -15,15 +17,17 @@ const s3 = new aws.S3({
   signatureVersion: 'v4'
 })
 
-export async function generateUploadURL() {
-  const imageName = "uploaded_image" // <-- Fixed file name
+export async function generateUploadURL(fileType) {
+  const fileExtension = mime.extension(fileType) || 'bin';
+  const randomFileName = `${uuidv4()}.${fileExtension}`;
 
-  const params = ({
+  const params = {
     Bucket: bucketName,
-    Key: imageName,
-    Expires: 60
-  })
+    Key: randomFileName,
+    Expires: 60,
+    ContentType: fileType
+  };
 
-  const uploadURL = await s3.getSignedUrlPromise('putObject', params)
-  return uploadURL
+  const uploadURL = await s3.getSignedUrlPromise('putObject', params);
+  return uploadURL;
 }
