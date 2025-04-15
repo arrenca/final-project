@@ -1,62 +1,58 @@
-const imageForm = document.querySelector("#imageForm")
-const imageInput = document.querySelector("#imageInput")
-const generateBtn = document.querySelector("#generateBtn");
-
-document.querySelector("#generateBtn").addEventListener("click", async () => {
-  const res = await fetch("/generateArticle")
-  const data = await res.json()
-
-  if (data.article) {
-    const container = document.querySelector("#articleContainer")
-    container.innerText = data.article
-  } else {
-    alert("Failed to generate article.")
-  }
-});
-
-generateBtn.addEventListener("click", async () => {
-  try {
-    const response = await fetch("/generate-article"); // Assumes you have a backend endpoint
-    const data = await response.json();
-
-    if (data.article) {
-      const articleElement = document.createElement("div");
-      articleElement.innerText = data.article;
-      document.body.appendChild(articleElement);
-    } else {
-      alert("Failed to generate article.");
-    }
-  } catch (err) {
-    console.error("Error:", err);
-  }
-});
+const imageForm = document.querySelector("#imageForm");
+const imageInput = document.querySelector("#imageInput");
+const articleContainer = document.querySelector("#articleContainer");
+let uploadedImageUrl = ""; // Store image URL for context if needed later
 
 imageForm.addEventListener("submit", async event => {
-  event.preventDefault()
-  const file = imageInput.files[0]
+  event.preventDefault();
+  const file = imageInput.files[0];
 
   // get secure url from our server
-  const { url } = await fetch("/s3Url").then(res => res.json())
-  console.log(url)
+  const { url } = await fetch("/s3Url").then(res => res.json());
+  console.log(url);
 
-  // post the image direclty to the s3 bucket
+  // post the image directly to the s3 bucket
   await fetch(url, {
     method: "PUT",
     headers: {
       "Content-Type": "multipart/form-data"
     },
     body: file
-  })
+  });
 
-  const imageUrl = url.split('?')[0]
-  console.log(imageUrl)
+  // Get the clean image URL
+  uploadedImageUrl = url.split('?')[0];
 
-  // post requst to my server to store any extra data
-  
-  
-  const img = document.createElement("img")
-  img.src = imageUrl
-  document.body.appendChild(img)
-  console.log("Uploaded successfully")  
+  // Clear previous content
+  articleContainer.innerHTML = "";
 
-})
+  // Display the image
+  const img = document.createElement("img");
+  img.src = uploadedImageUrl;
+  img.alt = "Uploaded image";
+  img.style.maxWidth = "100%";
+  img.style.display = "block";
+  img.style.marginTop = "20px";
+
+  articleContainer.appendChild(img);
+  console.log("Uploaded successfully");
+});
+
+document.querySelector("#generateBtn").addEventListener("click", async () => {
+  const res = await fetch("/generateArticle");
+  const data = await res.json();
+
+  if (data.article) {
+    // Create article paragraph
+    const article = document.createElement("p");
+    article.textContent = data.article;
+    article.style.marginTop = "20px";
+    article.style.fontFamily = "Georgia, serif";
+    article.style.fontSize = "1.1em";
+    article.style.lineHeight = "1.6";
+
+    articleContainer.appendChild(article);
+  } else {
+    alert("Failed to generate article.");
+  }
+});

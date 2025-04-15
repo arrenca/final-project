@@ -9,3 +9,9 @@ form > * {
   margin: 5px 0;
   box-sizing: border-box;
 }
+
+#articleContainer {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}

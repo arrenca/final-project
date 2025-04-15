@@ -3,8 +3,8 @@ import aws from 'aws-sdk'
 
 dotenv.config()
 
-const region = "ap-southeast-2"
-const bucketName = "arren-is215-final-project1"
+const region = "ap-southeast-2" // <-- Change to the correct AWS region
+const bucketName = "arren-is215-final-project1" // <-- Change to the correct bucket name
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
 
@@ -16,7 +16,7 @@ const s3 = new aws.S3({
 })
 
 export async function generateUploadURL() {
-  const imageName = "uploaded_image" // <-- Your fixed file name
+  const imageName = "uploaded_image" // <-- Fixed file name
 
   const params = ({
     Bucket: bucketName,
