@@ -19,8 +19,8 @@ async function getJsonFromS3(bucketName, fileKey) {
 }
 
 export async function generateCreativeArticle() {
-  const bucketName = "arren-is215-final-project1"
-  const fileKey = "analysis/uploaded_image.json"
+  const bucketName = "arren-is215-final-project1" // <-- Change to the correct bucket name
+  const fileKey = "analysis/uploaded_image.json" // <-- Change to the correct file key
   try {
     const imageData = await getJsonFromS3(bucketName, fileKey)
 
