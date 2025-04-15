@@ -1,6 +1,35 @@
-
 const imageForm = document.querySelector("#imageForm")
 const imageInput = document.querySelector("#imageInput")
+const generateBtn = document.querySelector("#generateBtn");
+
+document.querySelector("#generateBtn").addEventListener("click", async () => {
+  const res = await fetch("/generateArticle")
+  const data = await res.json()
+
+  if (data.article) {
+    const container = document.querySelector("#articleContainer")
+    container.innerText = data.article
+  } else {
+    alert("Failed to generate article.")
+  }
+});
+
+generateBtn.addEventListener("click", async () => {
+  try {
+    const response = await fetch("/generate-article"); // Assumes you have a backend endpoint
+    const data = await response.json();
+
+    if (data.article) {
+      const articleElement = document.createElement("div");
+      articleElement.innerText = data.article;
+      document.body.appendChild(articleElement);
+    } else {
+      alert("Failed to generate article.");
+    }
+  } catch (err) {
+    console.error("Error:", err);
+  }
+});
 
 imageForm.addEventListener("submit", async event => {
   event.preventDefault()
@@ -28,5 +57,6 @@ imageForm.addEventListener("submit", async event => {
   const img = document.createElement("img")
   img.src = imageUrl
   document.body.appendChild(img)
-  console.log("Uploaded successfully")
+  console.log("Uploaded successfully")  
+
 })

@@ -36,7 +36,7 @@ def generate_creative_article(image_data):
     """
     Generate a fictional creative article based on image analysis data
     """
-    prompt = f"""You are a creative writer. Based on the following image analysis data, write a fictional, engaging, and imaginative article or short story inspired by the scene. Be whimsical or dramatic—have fun with it!
+    prompt = f"""You are a creative writer. Based on the following image analysis data, write a fictional, engaging, and imaginative article or short story inspired by the scene. Be whimsical or dramatic—have fun with it. If it's a celebrity, make sure to incorporate the name in the story!
 
 Image Analysis:
 {json.dumps(image_data, indent=2)}
