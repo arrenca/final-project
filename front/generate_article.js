@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const s3 = new AWS.S3()
-const url = "https://is215-openai.upou.io/v1/chat/completions"
+const url = process.env.API_URL
 const apiKey = process.env.API_KEY
 
 const headers = {
