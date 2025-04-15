@@ -5,8 +5,8 @@ import mime from 'mime-types';
 
 dotenv.config()
 
-const region = "ap-southeast-2" // <-- Change to the correct AWS region
-const bucketName = "arren-is215-final-project1" // <-- Change to the correct bucket name
+const region = process.env.AWS_REGION
+const bucketName = process.env.S3_BUCKET_NAME
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
   

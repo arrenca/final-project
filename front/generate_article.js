@@ -47,7 +47,7 @@ async function getLatestJsonFromS3(bucketName, prefix = 'analysis/') {
 
 // Update your generateCreativeArticle function to use the new method
 export async function generateCreativeArticle() {
-  const bucketName = "arren-is215-final-project1"
+  const bucketName = process.env.S3_BUCKET_NAME
   try {
     const imageData = await getLatestJsonFromS3(bucketName)
 
