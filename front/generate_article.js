@@ -51,7 +51,7 @@ export async function generateCreativeArticle() {
   try {
     const imageData = await getLatestJsonFromS3(bucketName)
 
-    const prompt = `You are a creative writer. Based on the following image analysis data, write a fictional, engaging, and imaginative article or short story inspired by the image or scene. Be whimsical or dramatic—have fun with it. Create a title for that article. If it's a known personality or celebrity, make sure to include their actual name in the storyline!
+    const prompt = `You are a creative news writer. Based on the following image analysis data, write a fictional, engaging, and imaginative news article inspired by the image or scene. Be whimsical or dramatic—have fun with it. Create a title for that new article. If it's a known personality or celebrity, make sure to include their actual name in the storyline!
 
 Image Analysis:
 ${JSON.stringify(imageData, null, 2)}
