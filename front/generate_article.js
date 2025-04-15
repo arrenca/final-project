@@ -4,7 +4,7 @@ import fs from 'fs'
 
 const s3 = new AWS.S3()
 const url = "https://is215-openai.upou.io/v1/chat/completions"
-const apiKey = "anives-008Q84PdCC" // Replace with environment variable in prod
+const apiKey = "anives-008Q84PdCC"
 
 const headers = {
   "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export async function generateCreativeArticle() {
   try {
     const imageData = await getJsonFromS3(bucketName, fileKey)
 
-    const prompt = `You are a creative writer. Based on the following image analysis data, write a fictional, engaging, and imaginative article or short story inspired by the scene. Be whimsical or dramatic—have fun with it. If it's known personality or celebrity, make sure to include their name in the sotry!
+    const prompt = `You are a creative writer. Based on the following image analysis data, write a fictional, engaging, and imaginative article or short story inspired by the image or scene. Be whimsical or dramatic—have fun with it. If it's a known personality or celebrity, make sure to include their actual name in the storyline!
 
 Image Analysis:
 ${JSON.stringify(imageData, null, 2)}
