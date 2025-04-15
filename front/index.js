@@ -43,14 +43,26 @@ document.querySelector("#generateBtn").addEventListener("click", async () => {
   const data = await res.json();
 
   if (data.article) {
-    // Create article paragraph
+    const [title, ...bodyParts] = data.article.trim().split(/\n+/);
+    const body = bodyParts.join("\n\n");
+  
+    // Create and style the header
+    const header = document.createElement("h2");
+    header.textContent = title;
+    header.style.marginTop = "30px";
+    header.style.fontFamily = "Georgia, serif";
+    header.style.fontSize = "1.6em";
+    header.style.fontWeight = "bold";
+  
+    // Create and style the article body
     const article = document.createElement("p");
-    article.textContent = data.article;
-    article.style.marginTop = "20px";
+    article.textContent = body;
+    article.style.marginTop = "15px";
     article.style.fontFamily = "Georgia, serif";
     article.style.fontSize = "1.1em";
     article.style.lineHeight = "1.6";
-
+  
+    articleContainer.appendChild(header);
     articleContainer.appendChild(article);
   } else {
     alert("Failed to generate article.");
