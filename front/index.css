@@ -67,3 +67,33 @@ form button:hover {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+#loadingMessage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: fit-content;
+  margin: 30px auto;
+  padding: 12px 20px;
+  background-color: #e0f2ff;
+  border-left: 6px solid #0077ff;
+  color: #004085;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 119, 255, 0.1);
+  animation: pulse 1.6s infinite ease-in-out;
+}
+
+/* Optional pulse animation for a subtle "loading" effect */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.02);
+  }
+}
