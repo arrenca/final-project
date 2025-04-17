@@ -1,0 +1,19 @@
+{
+  "name": "final-project",
+  "version": "1.0.0",
+  "description": "final-project",
+  "main": "back/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arrenca/final-project.git"
+  },
+  "author": "arrenca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arrenca/final-project/issues"
+  },
+  "homepage": "https://github.com/arrenca/final-project#readme"
+}
