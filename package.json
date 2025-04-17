@@ -2,6 +2,7 @@
   "name": "final-project",
   "version": "1.0.0",
   "description": "final-project",
+  "type": "module",
   "main": "back/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
