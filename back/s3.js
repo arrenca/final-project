@@ -1,7 +1,6 @@
 import dotenv from 'dotenv'
 import aws from 'aws-sdk'
-import { v4 as uuidv4 } from 'uuid';
-import mime from 'mime-types';
+import { v4 as uuidv4 } from 'uuid'
 
 dotenv.config()
 
@@ -18,8 +17,7 @@ const s3 = new aws.S3({
 })
 
 export async function generateUploadURL(fileType) {
-  const fileExtension = mime.extension(fileType) || 'bin';
-  const randomFileName = `${uuidv4()}.${fileExtension}`;
+  const randomFileName = uuidv4(); // No extension added
 
   const params = {
     Bucket: bucketName,
