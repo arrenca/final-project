@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const s3 = new AWS.S3()
-const url = "https://is215-openai.upou.io/v1/chat/completions"
+const url = process.env.API_URL
 const apiKey = process.env.API_KEY
 
 const headers = {
@@ -13,20 +13,45 @@ const headers = {
   "Authorization": `Bearer ${apiKey}`
 }
 
-async function getJsonFromS3(bucketName, fileKey) {
-  const params = { Bucket: bucketName, Key: fileKey }
-  const response = await s3.getObject(params).promise()
+async function getLatestJsonFromS3(bucketName, prefix = 'analysis/') {
+  // List all objects in the bucket with the given prefix
+  const listParams = {
+    Bucket: bucketName,
+    Prefix: prefix
+  }
+  
+  const objects = await s3.listObjectsV2(listParams).promise()
+  
+  if (!objects.Contents || objects.Contents.length === 0) {
+    throw new Error('No JSON files found in the bucket')
+  }
+  
+  // Sort objects by LastModified date in descending order (most recent first)
+  const sortedObjects = objects.Contents.sort((a, b) => 
+    b.LastModified.getTime() - a.LastModified.getTime()
+  )
+  
+  // Get the most recent object
+  const latestObject = sortedObjects[0]
+  
+  // Get the object content
+  const getParams = {
+    Bucket: bucketName,
+    Key: latestObject.Key
+  }
+  
+  const response = await s3.getObject(getParams).promise()
   const jsonContent = response.Body.toString('utf-8')
   return JSON.parse(jsonContent)
 }
 
+// Update your generateCreativeArticle function to use the new method
 export async function generateCreativeArticle() {
-  const bucketName = "arren-is215-final-project1" // <-- Change to the correct bucket name
-  const fileKey = "analysis/uploaded_image.json" // <-- Change to the correct file key
+  const bucketName = process.env.S3_BUCKET_NAME
   try {
-    const imageData = await getJsonFromS3(bucketName, fileKey)
+    const imageData = await getLatestJsonFromS3(bucketName)
 
-    const prompt = `You are a creative writer. Based on the following image analysis data, write a fictional, engaging, and imaginative article or short story inspired by the image or scene. Be whimsical or dramatic—have fun with it. Create a title for that article. If it's a known personality or celebrity, make sure to include their actual name in the storyline!
+    const prompt = `You are a creative news writer. Based on the following image analysis data, write a fictional, engaging, and imaginative news article inspired by the image or scene. Be whimsical or dramatic—have fun with it. Create a title for that new article, but do not use markdown or formatting syntax like asterisks—just plain text. If it's a known personality or celebrity, make sure to include their actual name in the storyline!
 
 Image Analysis:
 ${JSON.stringify(imageData, null, 2)}
