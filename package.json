@@ -5,7 +5,7 @@
   "type": "module",
   "main": "back/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node back/server.js"
   },
   "repository": {
     "type": "git",
