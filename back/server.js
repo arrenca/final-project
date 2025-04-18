@@ -19,4 +19,4 @@ app.get('/generateArticle', async (req, res) => {
   }
 })
 
-app.listen(443, () => console.log("listening on port 443"))
+app.listen(80, () => console.log("listening on port 80"))
